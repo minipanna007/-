@@ -341,3 +341,207 @@ footer p { margin: 4px; }
     scroll-behavior: auto !important;
   }
 }
+
+/* ===== 烏鴉與雪兔：冰封檔案室首頁 ===== */
+
+.archive-home {
+  background: #e9f0f5;
+  color: #25394a;
+}
+
+.archive-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 88vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 90px 8% 85px;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      0deg,
+      rgba(16, 31, 45, .94) 0%,
+      rgba(22, 40, 55, .62) 42%,
+      rgba(30, 49, 65, .12) 100%
+    ),
+    url("images/winter-palace.jpg") center 45% / cover no-repeat,
+    linear-gradient(145deg, #cbdbe7, #526c83);
+}
+
+.archive-hero::after {
+  content: "SNEZHNAYA";
+  position: absolute;
+  z-index: -1;
+  top: 25px;
+  right: -15px;
+  color: rgba(255,255,255,.12);
+  font-size: clamp(55px, 12vw, 160px);
+  letter-spacing: 10px;
+  writing-mode: vertical-rl;
+  pointer-events: none;
+}
+
+.archive-hero-inner {
+  width: min(780px, 100%);
+  color: #f4f8fb;
+}
+
+.archive-kicker {
+  color: #c3d7e6;
+  font-size: 11px;
+  letter-spacing: 5px;
+}
+
+.archive-hero h1 {
+  margin: 20px 0;
+  color: #f7fafc;
+  font-size: clamp(42px, 8vw, 88px);
+  line-height: 1.25;
+  letter-spacing: 5px;
+  text-shadow: 0 3px 25px rgba(0,0,0,.18);
+}
+
+.archive-quote {
+  max-width: 680px;
+  padding-left: 18px;
+  border-left: 2px solid #b6cbdc;
+  color: #edf4f9;
+  font-size: clamp(16px, 2vw, 21px);
+}
+
+.archive-description {
+  max-width: 650px;
+  color: #c7d7e4;
+  margin: 24px 0 30px;
+}
+
+.archive-stamp {
+  display: inline-block;
+  margin-bottom: 25px;
+  padding: 5px 10px;
+  border: 1px solid rgba(220,235,246,.45);
+  color: #d7e6f1;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.archive-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.archive-link {
+  display: block;
+  padding: 20px;
+  color: #edf4f9;
+  background: #24394c;
+  border: 1px solid #526b80;
+  transition: .25s;
+}
+
+.archive-link:hover {
+  background: #3b566d;
+  transform: translateY(-4px);
+}
+
+.archive-link small {
+  display: block;
+  margin-bottom: 8px;
+  color: #b9ccdb;
+  letter-spacing: 2px;
+}
+
+.archive-link strong {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.archive-gallery {
+  max-width: 1100px;
+  margin: auto;
+  padding: 75px 24px;
+}
+
+.archive-gallery-heading {
+  margin-bottom: 30px;
+}
+
+.archive-gallery-heading h2 {
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: 3px;
+}
+
+.archive-gallery-heading p {
+  color: #637b90;
+}
+
+.archive-art-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.archive-art {
+  padding: 12px;
+  background: #f9fbfd;
+  border: 1px solid #c4d2de;
+  box-shadow: 0 15px 35px rgba(37,57,74,.09);
+}
+
+.archive-art:nth-child(2) {
+  margin-top: 55px;
+}
+
+.archive-art img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: #d6e3ec;
+}
+
+.archive-art figcaption {
+  padding: 15px 5px 8px;
+}
+
+.archive-art figcaption small {
+  color: #8b3547;
+  letter-spacing: 2px;
+}
+
+.archive-art figcaption h3 {
+  margin: 7px 0;
+}
+
+.archive-art figcaption p {
+  color: #637b90;
+  font-size: 13px;
+}
+
+.archive-endnote {
+  padding: 45px 20px;
+  text-align: center;
+  color: #dce8f1;
+  background: #243747;
+}
+
+@media (max-width: 700px) {
+  .archive-hero {
+    min-height: 78vh;
+    padding: 65px 7%;
+  }
+
+  .archive-links {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-art-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-art:nth-child(2) {
+    margin-top: 0;
+  }
+}
