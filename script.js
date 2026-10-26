@@ -15,7 +15,7 @@ if (unlockButton) {
 
     if (!input || !result) return;
 
-    if (input.value.trim() === "玫瑰") {
+    if (input.value.trim() === "白色山茶花") {
       result.textContent = "檔案已解鎖。『原來我早已把歸途，留給了你。』";
 
       const link = document.querySelector("#secret-link");
