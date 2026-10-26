@@ -4,48 +4,573 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>私人畫廊｜烏鴉 & 雪兔</title>
-<link rel="stylesheet" href="style.css">
+<title>冬境檔案室｜烏鴉 & 雪兔</title>
+<style>
+:root {
+  --ink: #293d50;
+  --muted: #75899b;
+  --ice: #eaf1f6;
+  --paper: rgba(250, 252, 254, .88);
+  --line: #cbd8e3;
+  --red: #9f4855;
+  --shadow: 0 18px 50px rgba(39, 61, 80, .09);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Noto Serif TC", "Songti TC", serif;
+  background:
+    radial-gradient(ellipse at 10% 15%, #fff 0%, transparent 42%),
+    linear-gradient(145deg, #edf3f8, #dce7f0 55%, #f6f7f8);
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 6%;
+  background: rgba(249, 251, 253, .88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand { letter-spacing: .14em; font-size: 14px; }
+
+.nav { display: flex; gap: 22px; font-size: 13px; }
+.nav a:hover { color: var(--red); }
+
+main {
+  max-width: 1180px;
+  width: 90%;
+  margin: auto;
+}
+
+.intro {
+  padding: 78px 0 42px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 30px;
+}
+
+.eyebrow {
+  color: var(--red);
+  letter-spacing: .24em;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(34px, 5vw, 57px);
+  font-weight: 500;
+  letter-spacing: .08em;
+  margin: 17px 0;
+}
+
+.intro p {
+  color: #637c91;
+  line-height: 2;
+  max-width: 620px;
+  font-size: 14px;
+}
+
+.archive-stamp {
+  border: 1px solid #b8c8d7;
+  padding: 20px 24px;
+  text-align: center;
+  transform: rotate(3deg);
+  background: rgba(255,255,255,.35);
+  color: #6f8599;
+  font-size: 10px;
+  letter-spacing: .18em;
+  line-height: 2;
+}
+
+.archive-stamp strong {
+  display: block;
+  color: var(--red);
+  font-size: 23px;
+  font-weight: 400;
+  letter-spacing: .12em;
+}
+
+.toolbar {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.filters { display: flex; gap: 8px; flex-wrap: wrap; }
+
+button, input, select { font: inherit; }
+
+.chip, .mode-btn {
+  cursor: pointer;
+  border: 1px solid #c8d5e1;
+  background: rgba(255,255,255,.55);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 10px 15px;
+  font-size: 12px;
+  transition: .2s ease;
+}
+
+.chip:hover, .mode-btn:hover,
+.chip.active, .mode-btn.active {
+  background: var(--ink);
+  color: white;
+  border-color: var(--ink);
+}
+
+.search {
+  margin-left: auto;
+  min-width: 190px;
+  width: 240px;
+  max-width: 100%;
+  border: 1px solid #c8d5e1;
+  background: rgba(255,255,255,.68);
+  border-radius: 3px;
+  padding: 11px 13px;
+  outline: none;
+  color: var(--ink);
+}
+
+.search:focus { border-color: #7f9bb3; }
+
+.statusline {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.modebar { display: flex; gap: 8px; }
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  padding-bottom: 70px;
+}
+
+.gallery.list-mode {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.work {
+  min-width: 0;
+  border: 1px solid rgba(189, 205, 219, .9);
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform .25s, box-shadow .25s;
+}
+
+.work:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 54px rgba(39,61,80,.14);
+}
+
+.artwork {
+  position: relative;
+  aspect-ratio: 5 / 3;
+  margin: 12px 12px 0;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, #e1eaf1, #f8fafc 50%, #d1dfeb);
+  display: grid;
+  place-items: center;
+}
+
+.artwork img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+  transition: transform .6s ease;
+}
+
+.work:hover .artwork img { transform: scale(1.035); }
+
+.art-placeholder {
+  text-align: center;
+  padding: 24px;
+  color: #7890a4;
+  line-height: 2;
+  font-size: 12px;
+}
+
+.art-placeholder strong {
+  display: block;
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: .16em;
+  color: #536d84;
+}
+
+.work-body { padding: 22px 25px 25px; }
+
+.work-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.category {
+  color: var(--red);
+  letter-spacing: .16em;
+  font-size: 10px;
+}
+
+.serial {
+  color: #9aabba;
+  font-size: 10px;
+  letter-spacing: .12em;
+}
+
+.work h2 {
+  font-size: 23px;
+  font-weight: 500;
+  margin: 17px 0 10px;
+}
+
+.description {
+  font-size: 13px;
+  color: #71869a;
+  line-height: 2;
+  white-space: pre-line;
+}
+
+details {
+  border-top: 1px solid #dce5ec;
+  margin-top: 18px;
+  padding-top: 13px;
+}
+
+summary {
+  cursor: pointer;
+  color: var(--red);
+  font-size: 12px;
+  letter-spacing: .06em;
+}
+
+.details-text {
+  white-space: pre-line;
+  font-size: 13px;
+  line-height: 2;
+  color: #61798e;
+  padding-top: 10px;
+}
+
+.list-mode .work {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  border-width: 0 0 1px;
+  box-shadow: none;
+  background: transparent;
+}
+
+.list-mode .artwork {
+  aspect-ratio: 1 / 1;
+  margin: 16px 0;
+}
+
+.list-mode .work-body { padding: 22px 26px; }
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 70px 15px;
+  color: var(--muted);
+  line-height: 2;
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  text-align: center;
+  padding: 30px 15px;
+  color: #8194a5;
+  font-size: 10px;
+  letter-spacing: .16em;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: rgba(20, 33, 46, .88);
+  display: none;
+  place-items: center;
+  padding: 25px;
+  cursor: zoom-out;
+}
+
+.lightbox.open { display: grid; }
+
+.lightbox img {
+  max-width: 94vw;
+  max-height: 88vh;
+  object-fit: contain;
+  box-shadow: 0 20px 70px #0005;
+}
+
+@media (max-width: 700px) {
+  .topbar { align-items: flex-start; padding: 15px 5%; }
+  .nav { gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+  .intro { padding-top: 48px; grid-template-columns: 1fr; }
+  .archive-stamp { justify-self: start; }
+  .gallery { grid-template-columns: 1fr; gap: 18px; }
+  .search { margin-left: 0; width: 100%; }
+  .statusline { flex-wrap: wrap; }
+  .list-mode .work { grid-template-columns: 115px minmax(0,1fr); }
+  .list-mode .work-body { padding: 14px; }
+  .list-mode .work h2 { font-size: 18px; }
+}
+</style>
 </head>
+
 <body>
-<header class="site-header">
-  <a class="logo" href="index.html">❄ 至今的點滴</a>
-<nav class="site-nav" aria-label="主要導覽">
-  <a href="index.html">序幕</a>
-  <a href="characters.html">雪兔＆烏鴉</a>
-  <a href="stories.html">雪箋故事</a>
-  <a href="gallery.html">畫廊收藏</a>
-  <a href="secret.html">禁頁</a>
-</nav>
+<header class="topbar">
+  <a class="brand" href="index.html">❄ 烏鴉 & 雪兔</a>
+  <nav class="nav" aria-label="主要導覽">
+    <a href="index.html">序幕</a>
+    <a href="characters.html">角色檔案</a>
+    <a href="stories.html">故事</a>
+    <a href="gallery.html">夢圖檔案室</a>
+    <a href="secret.html">禁頁</a>
+  </nav>
 </header>
 
-<section class="page-banner">
-  <div class="eyebrow">A PRIVATE GALLERY</div>
-  <h1>被雪收藏的瞬間</h1>
-  <p>每一張圖，都保存著一個不願遺忘的時刻。</p>
-</section>
+<main>
+  <section class="intro">
+    <div>
+      <div class="eyebrow">The Winter Archive · Private Collection</div>
+      <h1>冬境檔案室</h1>
+      <p>
+        有些心意被畫成了永恆，有些瞬間則適合留在信紙之間。
+        <br>
+        這裡收藏烏鴉與雪兔的插畫、故事、委託紀錄，以及不願遺忘的片刻。
+      </p>
+    </div>
+    <div class="archive-stamp">
+      PRIVATE MEMORY
+      <strong>雪境藏書</strong>
+      RAVEN & SNOW HARE
+    </div>
+  </section>
 
-<main class="content">
-  <div class="grid">
-    <article class="card">
-      <img class="gallery-image" src="images/dream-art.jpg" alt="烏鴉與雪兔的夢向插畫">
-      <div class="card-label">MEMORY 001</div>
-      <h2>雪落之前</h2>
-      <p>第一次相遇，或是命運再次交會的瞬間。</p>
-    </article>
+  <section class="toolbar" aria-label="作品篩選">
+    <div class="filters">
+      <button class="chip active" data-filter="全部">全部</button>
+      <button class="chip" data-filter="夢向插畫">夢向插畫</button>
+      <button class="chip" data-filter="委託紀錄">委託紀錄</button>
+      <button class="chip" data-filter="文字收藏">文字收藏</button>
+      <button class="chip" data-filter="珍藏瞬間">珍藏瞬間</button>
+    </div>
+    <input class="search" id="search" type="search"
+      placeholder="搜尋作品、日期或關鍵字…" aria-label="搜尋作品">
+  </section>
 
-    <article class="card">
-      <img class="gallery-image" src="images/dream-art-2.jpg" alt="第二幅夢向收藏插畫">
-      <div class="card-label">MEMORY 002</div>
-      <h2>歸途有光</h2>
-      <p>原本不為任何人停留的人，終於有了想回去的地方。</p>
-    </article>
+  <div class="statusline">
+    <span id="count">正在整理檔案……</span>
+    <div class="modebar">
+      <button class="mode-btn active" id="gridBtn">▦ 圖牆</button>
+      <button class="mode-btn" id="listBtn">☷ 清單</button>
+    </div>
   </div>
 
-  <p class="small">要顯示圖片，請將自己的圖片上傳至 images 資料夾，並使用上方指定的檔名。</p>
-  <a class="btn" href="index.html">回到首頁</a>
+  <section class="gallery" id="gallery" aria-label="夢圖收藏"></section>
 </main>
 
-<footer><p>WINTER COLLECTION · 烏鴉 &amp; 雪兔</p></footer>
+<footer>
+  WINTER ARCHIVE · EVERY MEMORY HAS A PLACE
+</footer>
+
+<div class="lightbox" id="lightbox" aria-label="放大圖片">
+  <img id="lightboxImg" alt="放大的收藏作品">
+</div>
+
+<script>
+/*
+  新增作品時，複製一份作品資料並修改內容即可。
+  image 填寫圖片在 GitHub 的路徑。
+  沒有圖片時，image 留空字串，就會顯示文字封面。
+*/
+const works = [
+  {
+    category: "夢向插畫",
+    title: "雪落之前",
+    date: "ARCHIVE 001",
+    image: "images/dream-01.jpg",
+    description: "第一次相遇，或是命運再次交會的瞬間。",
+    details: "作品紀錄：在這裡寫下畫面中的故事、當時的心情，或想留給對方的話。"
+  },
+  {
+    category: "委託紀錄",
+    title: "歸途有光",
+    date: "ARCHIVE 002",
+    image: "images/dream-02.jpg",
+    description: "原本不為任何人停留的人，終於有了想回去的地方。",
+    details: "委託繪師：請填寫繪師名稱\n完成日期：請填寫日期\n想收藏的原因：把這張圖對你的意義記錄在這裡。"
+  },
+  {
+    category: "文字收藏",
+    title: "未寄出的信",
+    date: "LETTER 003",
+    image: "",
+    description: "「如果雪一直落下，你還會記得回來的路嗎？」",
+    details: "把你喜歡的夢向文字、對話、短篇故事，或想對夢角說的話放在這裡。"
+  },
+  {
+    category: "珍藏瞬間",
+    title: "無聲的守候",
+    date: "MEMORY 004",
+    image: "",
+    description: "有些承諾不需要說出口，也會一直被好好保存。",
+    details: "可以記錄紀念插畫、特別的互動、朋友贈圖，或任何想永久收藏的回憶。"
+  }
+];
+
+const gallery = document.getElementById("gallery");
+const search = document.getElementById("search");
+const count = document.getElementById("count");
+let activeFilter = "全部";
+let mode = "grid";
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[ch]);
+}
+
+function makeArtwork(work) {
+  if (!work.image) {
+    return `<div class="art-placeholder">
+      <strong>❄ 記憶留白</strong>
+      <span>這份檔案等待一段故事</span>
+    </div>`;
+  }
+
+  return `<img src="${escapeHTML(work.image)}"
+    alt="${escapeHTML(work.title)}"
+    loading="lazy"
+    onerror="this.remove()">`;
+}
+
+function render() {
+  const keyword = search.value.trim().toLowerCase();
+
+  const filtered = works.filter(work => {
+    const matchesCategory =
+      activeFilter === "全部" || work.category === activeFilter;
+
+    const text = [
+      work.title, work.category, work.date,
+      work.description, work.details
+    ].join(" ").toLowerCase();
+
+    return matchesCategory && text.includes(keyword);
+  });
+
+  count.textContent = `共 ${filtered.length} 份記憶 · 已封存`;
+
+  gallery.classList.toggle("list-mode", mode === "list");
+
+  if (!filtered.length) {
+    gallery.innerHTML = `<div class="empty">
+      暫時沒有找到這份檔案。<br>也許它還在等待一個名字。
+    </div>`;
+    return;
+  }
+
+  gallery.innerHTML = filtered.map(work => `
+    <article class="work">
+      <div class="artwork">${makeArtwork(work)}</div>
+      <div class="work-body">
+        <div class="work-top">
+          <span class="category">${escapeHTML(work.category)}</span>
+          <span class="serial">${escapeHTML(work.date)}</span>
+        </div>
+        <h2>${escapeHTML(work.title)}</h2>
+        <div class="description">${escapeHTML(work.description)}</div>
+        <details>
+          <summary>開啟這份記憶 ↗</summary>
+          <div class="details-text">${escapeHTML(work.details)}</div>
+        </details>
+      </div>
+    </article>
+  `).join("");
+}
+
+document.querySelectorAll("[data-filter]").forEach(button => {
+  button.addEventListener("click", () => {
+    activeFilter = button.dataset.filter;
+    document.querySelectorAll("[data-filter]").forEach(item => {
+      item.classList.toggle("active", item === button);
+    });
+    render();
+  });
+});
+
+search.addEventListener("input", render);
+
+document.getElementById("gridBtn").addEventListener("click", () => {
+  mode = "grid";
+  document.getElementById("gridBtn").classList.add("active");
+  document.getElementById("listBtn").classList.remove("active");
+  render();
+});
+
+document.getElementById("listBtn").addEventListener("click", () => {
+  mode = "list";
+  document.getElementById("listBtn").classList.add("active");
+  document.getElementById("gridBtn").classList.remove("active");
+  render();
+});
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+
+gallery.addEventListener("click", event => {
+  const img = event.target.closest(".artwork img");
+  if (!img) return;
+  lightboxImg.src = img.src;
+  lightbox.classList.add("open");
+});
+
+lightbox.addEventListener("click", () => {
+  lightbox.classList.remove("open");
+  lightboxImg.src = "";
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") lightbox.classList.remove("open");
+});
+
+render();
+</script>
 </body>
 </html>
