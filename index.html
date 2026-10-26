@@ -4,562 +4,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>烏鴉 & 雪兔｜夢向紀事</title>
-
-<style>
-:root {
-  --snow: #f5f8fb;
-  --ice: #dce7ef;
-  --silver: #aebfce;
-  --blue: #34495d;
-  --deep: #172431;
-  --wine: #8b3547;
-  --text: #293b4b;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  color: var(--text);
-  background: #e8eef3;
-  font-family: Georgia, "Noto Serif TC", serif;
-  line-height: 1.9;
-}
-a { color: inherit; text-decoration: none; }
-
-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 14px 6%;
-  background: rgba(246,249,252,.94);
-  border-bottom: 1px solid #c0ceda;
-  backdrop-filter: blur(14px);
-}
-.logo {
-  color: #34495d;
-  letter-spacing: 2px;
-  font-size: 15px;
-}
-nav { display:flex; gap:17px; flex-wrap:wrap; font-size:13px; }
-nav a:hover { color: var(--wine); }
-
-.hero {
-  position: relative;
-  min-height: 88vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  isolation: isolate;
-  padding: 70px 22px 120px;
-  text-align: center;
-  background:
-    linear-gradient(180deg,
-      rgba(226,237,246,.25),
-      rgba(239,245,250,.58) 58%,
-      #e8eef3 100%),
-    radial-gradient(ellipse at 50% 30%,
-      #ffffff 0%, #d9e7f1 40%, #9eb3c7 100%);
-}
-
-/* 遠方的至冬城市 */
-.city {
-  position: absolute;
-  z-index: -1;
-  inset: auto 0 0;
-  width: 100%;
-  height: 64%;
-  pointer-events: none;
-}
-.city-back {
-  fill: #8fa6ba;
-  opacity: .32;
-}
-.city-front {
-  fill: #526d85;
-  opacity: .46;
-}
-.city-snow {
-  fill: #f8fbfd;
-  opacity: .92;
-}
-.mountain {
-  position: absolute;
-  z-index: -2;
-  inset: auto 0 20%;
-  width: 100%;
-  height: 55%;
-  background: #ffffff;
-  opacity: .34;
-  clip-path: polygon(0 90%, 13% 43%, 21% 66%,
-    36% 20%, 49% 67%, 63% 31%, 76% 62%,
-    88% 17%, 100% 68%, 100% 100%, 0 100%);
-}
-
-/* 冰雪霧氣 */
-.mist {
-  position: absolute;
-  z-index: -1;
-  left: -10%;
-  right: -10%;
-  bottom: 12%;
-  height: 23%;
-  background: linear-gradient(180deg,
-    transparent, rgba(247,250,253,.86), transparent);
-  filter: blur(15px);
-}
-
-/* 白色鳶尾花裝飾 */
-.iris {
-  position: absolute;
-  width: clamp(100px, 16vw, 205px);
-  opacity: .8;
-  pointer-events: none;
-  filter: drop-shadow(0 7px 12px rgba(66,87,108,.13));
-}
-.iris-left {
-  left: -20px;
-  top: 16%;
-  transform: rotate(-15deg);
-}
-.iris-right {
-  right: -15px;
-  bottom: 13%;
-  transform: rotate(18deg) scale(.85);
-}
-.hero-content {
-  position: relative;
-  z-index: 2;
-  width: min(850px,100%);
-  animation: appear 1.3s ease both;
-}
-.eyebrow {
-  color: #607b93;
-  letter-spacing: 4px;
-  font-size: 11px;
-}
-h1 {
-  color: #293b4b;
-  font-size: clamp(40px,8vw,78px);
-  line-height: 1.35;
-  letter-spacing: 5px;
-  margin: 20px 0 28px;
-  text-shadow: 0 2px 24px white;
-}
-.hero-quote {
-  max-width: 720px;
-  margin: 22px auto;
-  font-size: clamp(16px,2vw,20px);
-  color: #34495d;
-}
-.hero-description {
-  max-width: 700px;
-  margin: 20px auto 34px;
-  color: #536b80;
-}
-.btn {
-  display: inline-block;
-  padding: 10px 24px;
-  margin: 5px;
-  border: 1px solid #70899f;
-  background: #34495d;
-  color: white;
-  cursor: pointer;
-  font: inherit;
-  transition: .25s;
-}
-.btn:hover {
-  background: #526d85;
-  transform: translateY(-3px);
-}
-.btn-light {
-  color: #34495d;
-  background: rgba(255,255,255,.65);
-}
-.btn-light:hover {
-  background: white;
-}
-.scroll-note {
-  position: absolute;
-  bottom: 18px;
-  left: 0;
-  right: 0;
-  color: #5d7388;
-  font-size: 12px;
-  letter-spacing: 3px;
-}
-
-main { overflow: hidden; }
-.content-section {
-  max-width: 1050px;
-  margin: auto;
-  padding: 75px 24px;
-  scroll-margin-top: 80px;
-}
-.section-heading {
-  display: flex;
-  align-items: baseline;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-bottom: 25px;
-}
-.section-number {
-  color: #8b3547;
-  font-size: 26px;
-  font-style: italic;
-}
-h2 {
-  color: #34495d;
-  letter-spacing: 3px;
-  margin: 0;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 20px;
-}
-.card {
-  padding: 27px;
-  background: rgba(250,252,254,.8);
-  border: 1px solid #bdccd9;
-  box-shadow: 0 14px 40px rgba(44,64,82,.07);
-  transition: transform .3s, border-color .3s;
-}
-.card:hover {
-  transform: translateY(-5px);
-  border-color: #8199ad;
-}
-.number {
-  color: #8b3547;
-  font-size: 11px;
-  letter-spacing: 3px;
-}
-h3 { color: #34495d; }
-.card p { color: #586d80; }
-.story-card {
-  border-left: 3px solid #8b3547;
-}
-.dialogue {
-  min-height: 75px;
-  color: #34495d;
-  font-size: 18px;
-}
-input {
-  width: 100%;
-  max-width: 400px;
-  padding: 12px;
-  color: #293b4b;
-  background: #f8fbfd;
-  border: 1px solid #aebfce;
-  font: inherit;
-}
-footer {
-  padding: 36px 20px;
-  text-align: center;
-  color: #e1eaf1;
-  background: #263746;
-  border-top: 1px solid #8298ab;
-}
-footer p { margin: 5px; }
-.small { font-size: 12px; color: #71869a; }
-
-@keyframes appear {
-  from { opacity:0; transform:translateY(18px); }
-  to { opacity:1; transform:translateY(0); }
-}
-@media (max-width:600px) {
-  header { align-items:flex-start; }
-  nav { gap:11px; }
-  .grid { grid-template-columns:1fr; }
-  .hero { min-height:80vh; }
-  .iris { width:100px; opacity:.48; }
-  .content-section { padding:52px 20px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    scroll-behavior:auto !important;
-    animation:none !important;
-    transition:none !important;
-  }
-}
-</style>
+<title>烏鴉 & 雪兔｜冬境紀事</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-<header>
-  <a class="logo" href="#home">❄ 烏鴉 & 雪兔</a>
-  <nav>
-    <a href="#home">首頁</a>
-    <a href="#profile">角色檔案</a>
-    <a href="#story">故事</a>
-    <a href="#gallery">畫廊收藏</a>
-    <a href="#talk">對話</a>
-    <a href="#secret">秘密</a>
+<header class="site-header">
+  <a class="logo" href="index.html">❄ 烏鴉 & 雪兔</a>
+  <nav class="site-nav">
+    <a href="index.html" aria-current="page">首頁</a>
+    <a href="characters.html">角色檔案</a>
+    <a href="stories.html">故事</a>
+    <a href="gallery.html">畫廊收藏</a>
+    <a href="secret.html">秘密</a>
   </nav>
 </header>
 
 <main>
-<section class="hero" id="home">
-  <div class="mountain"></div>
-  <div class="mist"></div>
-
-  <!-- 冬日城市剪影，可直接顯示，不需另外下載圖片 -->
-  <svg class="city" viewBox="0 0 1200 420"
-       preserveAspectRatio="xMidYMax slice"
-       aria-hidden="true">
-    <g class="city-back">
-      <path d="M0 300 L0 240 55 240 55 205 70 205 70 165
-      86 205 105 205 105 250 145 250 145 180 165 180
-      165 145 182 180 198 180 198 260 235 260 235 210
-      270 210 270 160 286 160 286 115 302 160 320 160
-      320 245 355 245 355 185 385 185 385 140 400 185
-      420 185 420 265 460 265 460 210 490 210 490 165
-      505 165 505 120 520 165 535 165 535 245 575 245
-      575 200 610 200 610 150 625 150 625 95 642 150
-      660 150 660 260 700 260 700 190 735 190 735 140
-      750 140 750 95 767 140 785 140 785 245 820 245
-      820 190 855 190 855 145 870 190 890 190 890 260
-      930 260 930 210 960 210 960 165 975 165 975 115
-      992 165 1008 165 1008 250 1040 250 1040 200
-      1070 200 1070 150 1085 150 1085 110 1102 150
-      1120 150 1120 245 1155 245 1155 205 1180 205
-      1180 245 1200 245 1200 420 0 420 Z"/>
+<section class="hero">
+  <svg class="ice-scene" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
+    <g class="far">
+      <path d="M0 220 L80 150 130 205 210 95 290 205 370 135 460 210 550 90 640 215 740 125 830 215 930 80 1030 210 1120 135 1200 205 1200 300 0 300Z"/>
     </g>
-    <g class="city-front">
-      <path d="M0 330 L0 275 80 275 80 305 125 305
-      125 250 155 250 155 225 168 250 185 250
-      185 310 225 310 225 275 260 275 260 230
-      275 230 275 205 290 230 305 230 305 310
-      355 310 355 265 390 265 390 235 405 235
-      405 265 425 265 425 320 470 320 470 270
-      510 270 510 235 525 235 525 270 545 270
-      545 315 590 315 590 255 625 255 625 220
-      640 220 640 255 660 255 660 315 710 315
-      710 270 750 270 750 225 765 225 765 270
-      785 270 785 320 830 320 830 270 870 270
-      870 235 885 235 885 270 905 270 905 320
-      955 320 955 275 990 275 990 240 1005 240
-      1005 275 1025 275 1025 320 1070 320 1070 275
-      1100 275 1100 245 1115 245 1115 275 1135 275
-      1135 320 1200 320 1200 420 0 420 Z"/>
+    <g class="near">
+      <path d="M0 245 L60 245 60 200 80 150 100 200 100 245 155 245 155 215 185 215 185 175 200 215 225 215 225 250 285 250 285 210 320 210 320 165 338 210 355 210 355 250 430 250 430 215 470 215 470 180 488 215 505 215 505 250 580 250 580 205 620 205 620 165 638 205 660 205 660 250 735 250 735 220 780 220 780 180 800 220 820 220 820 250 900 250 900 215 940 215 940 170 960 215 980 215 980 250 1060 250 1060 215 1100 215 1100 185 1120 215 1140 215 1140 250 1200 250 1200 300 0 300Z"/>
     </g>
-    <g class="city-snow">
-      <path d="M55 240 L70 165 86 240 Z
-      M145 180 L165 145 182 180 Z
-      M270 160 L286 115 302 160 Z
-      M385 140 L400 110 415 140 Z
-      M490 165 L505 120 520 165 Z
-      M610 150 L625 95 642 150 Z
-      M735 140 L750 95 767 140 Z
-      M855 145 L870 110 885 145 Z
-      M960 165 L975 115 992 165 Z
-      M1070 150 L1085 110 1102 150 Z"/>
-    </g>
+    <path class="snow" d="M80 150 L100 200 60 200Z M210 95 L235 140 190 140Z M550 90 L575 140 530 140Z M930 80 L960 130 900 130Z"/>
   </svg>
 
-  <!-- 白色鳶尾花：以內嵌向量繪製 -->
-  <svg class="iris iris-left" viewBox="0 0 200 230"
-       aria-hidden="true">
-    <g fill="#fff" stroke="#aabccc" stroke-width="1.5">
-      <path d="M100 125 C55 105 44 65 65 42
-      C83 48 94 76 100 125Z"/>
-      <path d="M100 125 C98 75 116 38 137 42
-      C151 70 126 105 100 125Z"/>
-      <path d="M100 125 C132 82 168 83 173 105
-      C162 126 131 132 100 125Z"/>
-      <path d="M100 125 C64 87 28 105 35 130
-      C51 147 77 140 100 125Z"/>
-      <path d="M100 125 C76 137 76 177 100 193
-      C126 175 124 143 100 125Z"/>
-    </g>
-    <path d="M100 122 Q100 175 84 220
-      M100 160 Q65 165 50 190
-      M92 186 Q118 183 139 202"
-      fill="none" stroke="#839f94" stroke-width="3"/>
-    <path d="M89 175 Q55 151 50 177
-      Q68 192 89 175Z"
-      fill="#c5d8d0" stroke="#8ea99f"/>
-    <path d="M104 191 Q132 161 150 184
-      Q132 202 104 191Z"
-      fill="#c5d8d0" stroke="#8ea99f"/>
-    <circle cx="100" cy="124" r="9" fill="#d9c7a2"/>
-  </svg>
-
-  <svg class="iris iris-right" viewBox="0 0 200 230"
-       aria-hidden="true">
-    <g fill="#fff" stroke="#aabccc" stroke-width="1.5">
-      <path d="M100 125 C55 105 44 65 65 42
-      C83 48 94 76 100 125Z"/>
-      <path d="M100 125 C98 75 116 38 137 42
-      C151 70 126 105 100 125Z"/>
-      <path d="M100 125 C132 82 168 83 173 105
-      C162 126 131 132 100 125Z"/>
-      <path d="M100 125 C64 87 28 105 35 130
-      C51 147 77 140 100 125Z"/>
-      <path d="M100 125 C76 137 76 177 100 193
-      C126 175 124 143 100 125Z"/>
-    </g>
-    <path d="M100 122 Q100 175 84 220
-      M100 160 Q65 165 50 190
-      M92 186 Q118 183 139 202"
-      fill="none" stroke="#839f94" stroke-width="3"/>
-    <path d="M89 175 Q55 151 50 177
-      Q68 192 89 175Z"
-      fill="#c5d8d0" stroke="#8ea99f"/>
-    <path d="M104 191 Q132 161 150 184
-      Q132 202 104 191Z"
-      fill="#c5d8d0" stroke="#8ea99f"/>
-    <circle cx="100" cy="124" r="9" fill="#d9c7a2"/>
-  </svg>
-
-  <div class="hero-content">
-    <div class="eyebrow">WINTER ARCHIVE · TWO SOULS</div>
+  <div class="hero-copy">
+    <div class="eyebrow">WINTER CHRONICLE · ARCHIVE 001</div>
     <h1>烏鴉 &amp; 雪兔</h1>
 
-    <p class="hero-quote">
-      『他們從不向命運低頭，卻在漫長的交鋒中，將真心交付給彼此』
-    </p>
+    <p class="hero-quote">『他們從不向命運低頭，卻在漫長的交鋒中，將真心交付給彼此』</p>
 
-    <p class="hero-description">
-      兩條孤高的軌跡相遇，原本無意為誰停留的人，竟也開始期待歸途有光。
-    </p>
+    <p class="hero-description">兩條孤高的軌跡相遇，原本無意為誰停留的人，竟也開始期待歸途有光。</p>
 
-    <a class="btn" href="#profile">
-      循著彼此的軌跡，走向有你的歸途 ↗
-    </a>
+    <a class="btn" href="stories.html">開啟第一篇紀事 ↗</a>
+    <a class="btn btn-outline" href="characters.html">閱讀角色檔案</a>
   </div>
 
-  <div class="scroll-note">SCROLL TO DISCOVER　↓</div>
-</section>
-
-<section class="content-section" id="profile">
-  <div class="section-heading">
-    <span class="section-number">01</span>
-    <h2>角色檔案</h2>
-    <span class="eyebrow">CHARACTER ARCHIVE</span>
-  </div>
-
-  <div class="grid">
-    <article class="card">
-      <div class="number">PROFILE A</div>
-      <h3>多托雷｜Il Dottore</h3>
-      <p>一個不願向命運低頭的人。習慣獨自承擔一切，從不輕易向任何人交付真心。</p>
-      <p>然而，那條原本獨行的軌跡，開始因某個人而有了歸途。</p>
-    </article>
-
-    <article class="card">
-      <div class="number">PROFILE B</div>
-      <h3>米露可｜Milucia</h3>
-      <p>看似冷靜而孤高，始終沿著自己的道路前行，不曾期待有人能真正理解自己。</p>
-      <p>她從不甘於成為誰的附屬品，卻願意與他並肩，走向未知的盡頭。</p>
-    </article>
-  </div>
-  <p class="small">角色資料為示範內容，之後可以換成你的正式設定。</p>
-</section>
-
-<section class="content-section" id="story">
-  <div class="section-heading">
-    <span class="section-number">02</span>
-    <h2>我們的故事</h2>
-    <span class="eyebrow">STORIES &amp; DREAMS</span>
-  </div>
-
-  <article class="card story-card">
-    <div class="number">CHAPTER 001 · THE FIRST ENCOUNTER</div>
-    <h3>兩條軌跡的交會</h3>
-    <p>他們曾經以為，自己不需要任何人。命運給予的考驗與無數次的交鋒，都只是獨自前行的理由。</p>
-    <p>然而，不知從何時開始，每一次相遇都成了無法忽視的期待。</p>
-    <p>「如果有一天，你真的實現理想了呢？」</p>
-    <p>他沒有回答，只是第一次認真思考，那個從未想像過的未來。</p>
+  <article class="art-card">
+    <div class="art-frame">
+      <img src="images/dream-art.jpg" alt="烏鴉與雪兔的夢向插畫">
+    </div>
+    <div class="art-caption">
+      <h2>雪落之前，與你相逢。</h2>
+      <p>WINTER ARCHIVE · MEMORY 001</p>
+      <p>「在漫長的寒夜裡，仍有人值得等待。」</p>
+    </div>
   </article>
 </section>
 
-<section class="content-section" id="gallery">
+<section class="content">
   <div class="section-heading">
-    <span class="section-number">03</span>
-    <h2>珍藏展示</h2>
-    <span class="eyebrow">PRIVATE COLLECTION</span>
+    <span class="section-number">01</span>
+    <h2>冬境檔案</h2>
   </div>
-
   <div class="grid">
     <article class="card">
-      <div class="number">MEMORY 001</div>
-      <h3>初次相遇</h3>
-      <p>那些看似偶然，後來卻成為命運的相遇。</p>
+      <div class="card-label">CHARACTER FILE</div>
+      <h3>兩個人的故事</h3>
+      <p>記錄他們的性格、秘密，以及那些從未對旁人說出口的心意。</p>
+      <a class="btn btn-outline" href="characters.html">進入角色檔案 ↗</a>
     </article>
     <article class="card">
-      <div class="number">MEMORY 002</div>
-      <h3>未曾說出口的心意</h3>
-      <p>有些話沒有說出口，卻早已藏在每一次凝望裡。</p>
+      <div class="card-label">PRIVATE COLLECTION</div>
+      <h3>被收藏的瞬間</h3>
+      <p>插畫、信件、約會紀錄，以及只有彼此才懂的紀念。</p>
+      <a class="btn btn-outline" href="gallery.html">翻閱私人畫廊 ↗</a>
     </article>
-  </div>
-  <p class="small">之後可以把你的插畫放進這裡，製作成真正的圖片畫廊。</p>
-</section>
-
-<section class="content-section" id="talk">
-  <div class="section-heading">
-    <span class="section-number">04</span>
-    <h2>與他交談</h2>
-    <span class="eyebrow">PRIVATE CONVERSATION</span>
-  </div>
-
-  <div class="card">
-    <p class="dialogue" id="reply">「……怎麼，今天終於想起我了？」</p>
-    <button class="btn" data-reply="別站在那裡。既然來了，就過來坐下。">靠近他</button>
-    <button class="btn" data-reply="想我了？……呵，這次倒是挺誠實。">說你想他</button>
-    <button class="btn" data-reply="……今天辛苦了。剩下的事情，明天再煩惱吧。">告訴他今天很累</button>
-  </div>
-</section>
-
-<section class="content-section" id="secret">
-  <div class="section-heading">
-    <span class="section-number">05</span>
-    <h2>未公開的秘密</h2>
-    <span class="eyebrow">CLASSIFIED</span>
-  </div>
-
-  <div class="card">
-    <p>檔案提示：有一種花，象徵著熱烈而深沉的愛。</p>
-    <p>輸入正確的線索，查看隱藏訊息。</p>
-    <input id="clue" type="text" placeholder="輸入線索……">
-    <br><br>
-    <button class="btn" id="unlock">嘗試解鎖</button>
-    <p id="result" aria-live="polite"></p>
   </div>
 </section>
 </main>
 
 <footer>
-  <p>✦ 烏鴉 &amp; 雪兔 ✦</p>
-  <p>在至冬漫長的寒夜裡，願彼此成為歸途的微光。</p>
+  <p>❄ 烏鴉 &amp; 雪兔 ❄</p>
+  <p>兩條孤高的軌跡，終將在彼此身旁停留。</p>
 </footer>
-
-<script>
-document.querySelectorAll("[data-reply]").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelector("#reply").textContent =
-      button.dataset.reply;
-  });
-});
-
-document.querySelector("#unlock").addEventListener("click", () => {
-  const answer = document.querySelector("#clue").value.trim();
-  const result = document.querySelector("#result");
-
-  if (answer === "白色山茶花") {
-    result.textContent =
-      "檔案已解鎖。『原來我早已把歸途，留給了你。』";
-  } else {
-    result.textContent =
-      "線索不正確。再想想那朵象徵愛意的花吧。";
-  }
-});
-</script>
+<script src="script.js"></script>
 </body>
 </html>
