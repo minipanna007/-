@@ -587,16 +587,11 @@ footer p { margin: 4px; }
 /* ===== 烏鴉與雪兔｜淡色冰雪背景 ===== */
 
 body {
-  background-color: #edf3f8;
-  background-image:
-    linear-gradient(
-      rgba(239, 245, 250, 0.76),
-      rgba(239, 245, 250, 0.76)
-    ),
-    url("images/yuki.jpg");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+  background-color: #ffb6c1 !important;
+  background-image: url("./images/yuki.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
   background-attachment: fixed;
 }
 
