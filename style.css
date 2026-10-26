@@ -587,7 +587,7 @@ footer p { margin: 4px; }
 /* ===== 烏鴉與雪兔｜淡色冰雪背景 ===== */
 
 body {
-  background-color: #ffb6c1 !important;
+  background-color: #edf3f8;
   background-image: url("./images/yuki.jpg") !important;
   background-size: cover !important;
   background-position: center !important;
@@ -614,4 +614,24 @@ body {
     background-attachment: scroll;
     background-position: center center;
   }
+}
+/* ===== 首頁專用：雪山背景 ===== */
+
+body:has(.hero) {
+  background-image:
+    linear-gradient(
+      rgba(239, 245, 250, 0.76),
+      rgba(239, 245, 250, 0.76)
+    ),
+    url("./images/yuki.jpg") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+/* 首頁主視覺保持透明，讓雪山透出來 */
+.hero {
+  background: transparent !important;
+  background-image: none !important;
 }
