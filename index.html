@@ -474,6 +474,164 @@ a { color: inherit; text-decoration: none; }
     scroll-behavior: auto !important;
   }
 }
+
+/* WINTER MUSIC PLAYER */
+.winter-music {
+  position: fixed;
+  top: 76px;
+  left: 22px;
+  z-index: 50;
+  width: min(290px, calc(100vw - 32px));
+  color: #344b5f;
+  font-family: Georgia, "Noto Serif TC", serif;
+}
+.winter-music-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  color: #344b5f;
+  background: rgba(249,252,254,.94);
+  border: 1px solid #c7d6e2;
+  box-shadow: 0 8px 22px rgba(47,70,90,.10);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  backdrop-filter: blur(10px);
+}
+.winter-music-toggle:hover { background: #fff; }
+.winter-music-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+.winter-music-disc {
+  color: #7895ad;
+  font-size: 19px;
+  line-height: 1;
+}
+.winter-music-toggle small {
+  display: block;
+  color: #8298aa;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+.winter-music-panel {
+  display: none;
+  margin-top: 7px;
+  padding: 15px;
+  background: rgba(249,252,254,.97);
+  border: 1px solid #c7d6e2;
+  box-shadow: 0 14px 34px rgba(47,70,90,.16);
+  backdrop-filter: blur(12px);
+}
+.winter-music.is-open .winter-music-panel { display: block; }
+.winter-music-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  color: #8298aa;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+.winter-music-track {
+  margin-bottom: 2px;
+  color: #2e465a;
+  font-size: 17px;
+  overflow-wrap: anywhere;
+}
+.winter-music-subtitle {
+  margin-bottom: 13px;
+  color: #8298aa;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.winter-music-select {
+  width: 100%;
+  margin: 0 0 12px;
+  padding: 8px 10px;
+  color: #405b70;
+  background: #f1f6fa;
+  border: 1px solid #d0dde7;
+  font: inherit;
+  font-size: 12px;
+}
+.winter-music-time {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+  color: #8298aa;
+  font: 10px Georgia, serif;
+  font-variant-numeric: tabular-nums;
+}
+.winter-music input[type="range"] {
+  width: 100%;
+  margin: 3px 0 10px;
+  accent-color: #718fa8;
+  cursor: pointer;
+}
+.winter-music-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin: 4px 0 12px;
+}
+.winter-music-controls button,
+.winter-music-volume button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #536f85;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 17px;
+}
+.winter-music-controls .winter-music-play {
+  width: 39px;
+  height: 39px;
+  color: #fff;
+  background: #344f65;
+  border-radius: 50%;
+  font-size: 15px;
+}
+.winter-music-volume {
+  display: grid;
+  grid-template-columns: 18px 1fr 30px;
+  align-items: center;
+  gap: 8px;
+  color: #7891a5;
+  font-size: 10px;
+}
+.winter-music-volume input { margin: 0 !important; }
+.winter-music-note {
+  margin-top: 11px;
+  color: #9aabba;
+  font-size: 8px;
+  letter-spacing: 1.7px;
+  text-align: center;
+}
+.winter-music button:focus-visible,
+.winter-music select:focus-visible,
+.winter-music input:focus-visible {
+  outline: 2px solid #789ab2;
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .winter-music {
+    top: 12px;
+    left: 12px;
+    width: min(260px, calc(100vw - 24px));
+  }
+  .winter-music-panel { padding: 12px; }
+}
+
 </style>
 </head>
 
@@ -614,6 +772,201 @@ a { color: inherit; text-decoration: none; }
   <p>❄ 烏鴉 &amp; 雪兔 · WINTER ARCHIVE ❄</p>
   <p>「願漫長的冬日過後，仍能循著彼此的軌跡歸來。」</p>
 </footer>
+
+
+<!-- WINTER MUSIC PLAYER -->
+<aside class="winter-music" id="winterMusic">
+  <button class="winter-music-toggle" id="musicToggle"
+          type="button" aria-expanded="false" aria-controls="musicPanel">
+    <span class="winter-music-toggle-label">
+      <span class="winter-music-disc" aria-hidden="true">❄</span>
+      <span>
+        <strong style="font-size:12px;letter-spacing:2px;">WINTER MUSIC</strong>
+        <small id="musicMiniTitle">選擇一首冬日旋律</small>
+      </span>
+    </span>
+    <span id="musicChevron" aria-hidden="true">⌄</span>
+  </button>
+
+  <div class="winter-music-panel" id="musicPanel">
+    <div class="winter-music-topline">
+      <span>NOW PLAYING</span>
+      <span id="musicTrackNumber">TRACK 01 / 03</span>
+    </div>
+
+    <div class="winter-music-track" id="musicTrackTitle">WANTCHU</div>
+    <div class="winter-music-subtitle">WINTER CHRONICLE · MUSIC ARCHIVE</div>
+
+    <label for="musicSelect" class="winter-music-subtitle">PLAYLIST</label>
+    <select class="winter-music-select" id="musicSelect">
+      <option value="0">01 · WANTCHU</option>
+      <option value="1">02 · 心の在り処</option>
+      <option value="2">03 · 星月夜</option>
+    </select>
+
+    <div class="winter-music-time">
+      <span id="musicCurrentTime">0:00</span>
+      <span id="musicDuration">0:00</span>
+    </div>
+    <input id="musicSeek" type="range" min="0" max="100" value="0"
+           step="0.1" aria-label="歌曲播放進度">
+
+    <div class="winter-music-controls">
+      <button type="button" id="musicPrev" aria-label="上一首">|◀</button>
+      <button type="button" class="winter-music-play" id="musicPlay"
+              aria-label="播放">▶</button>
+      <button type="button" id="musicNext" aria-label="下一首">▶|</button>
+    </div>
+
+    <div class="winter-music-volume">
+      <span aria-hidden="true">♫</span>
+      <input id="musicVolume" type="range" min="0" max="1" value="0.65"
+             step="0.01" aria-label="音量">
+      <span id="musicVolumeText">65%</span>
+    </div>
+    <div class="winter-music-note">A QUIET MOMENT IN THE SNOW</div>
+  </div>
+
+  <audio id="winterAudio" preload="metadata"></audio>
+</aside>
+
+
+<script>
+(() => {
+  const tracks = [
+    {
+      title: "WANTCHU",
+      file: "audio/WANTCHU-keshi.mp3"
+    },
+    {
+      title: "心の在り処",
+      file: "audio/" + encodeURIComponent("《心の在り処》.mp3")
+    },
+    {
+      title: "星月夜",
+      file: "audio/" + encodeURIComponent("《星月夜》.mp3")
+    }
+  ];
+
+  const player = document.getElementById("winterMusic");
+  const audio = document.getElementById("winterAudio");
+  const toggle = document.getElementById("musicToggle");
+  const panel = document.getElementById("musicPanel");
+  const chevron = document.getElementById("musicChevron");
+  const select = document.getElementById("musicSelect");
+  const title = document.getElementById("musicTrackTitle");
+  const miniTitle = document.getElementById("musicMiniTitle");
+  const number = document.getElementById("musicTrackNumber");
+  const playButton = document.getElementById("musicPlay");
+  const seek = document.getElementById("musicSeek");
+  const currentTime = document.getElementById("musicCurrentTime");
+  const duration = document.getElementById("musicDuration");
+  const volume = document.getElementById("musicVolume");
+  const volumeText = document.getElementById("musicVolumeText");
+
+  let currentTrack = 0;
+  let seeking = false;
+
+  function formatTime(seconds) {
+    if (!Number.isFinite(seconds)) return "0:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return mins + ":" + String(secs).padStart(2, "0");
+  }
+
+  function updateTrackLabels() {
+    const track = tracks[currentTrack];
+    title.textContent = track.title;
+    miniTitle.textContent = track.title;
+    number.textContent = "TRACK " + String(currentTrack + 1).padStart(2, "0") + " / 03";
+    select.value = String(currentTrack);
+  }
+
+  function loadTrack(index, autoplay = false) {
+    currentTrack = (index + tracks.length) % tracks.length;
+    audio.pause();
+    audio.src = tracks[currentTrack].file;
+    audio.load();
+    updateTrackLabels();
+    seek.value = 0;
+    currentTime.textContent = "0:00";
+    duration.textContent = "0:00";
+    playButton.textContent = "▶";
+    playButton.setAttribute("aria-label", "播放");
+    if (autoplay) {
+      audio.play().then(updatePlayButton).catch(() => {
+        updatePlayButton();
+      });
+    }
+  }
+
+  function updatePlayButton() {
+    const playing = !audio.paused;
+    playButton.textContent = playing ? "Ⅱ" : "▶";
+    playButton.setAttribute("aria-label", playing ? "暫停" : "播放");
+  }
+
+  toggle.addEventListener("click", () => {
+    const isOpen = player.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    chevron.textContent = isOpen ? "⌃" : "⌄";
+  });
+
+  playButton.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play().then(updatePlayButton).catch(() => {
+        updatePlayButton();
+      });
+    } else {
+      audio.pause();
+    }
+  });
+
+  document.getElementById("musicPrev").addEventListener("click", () => {
+    loadTrack(currentTrack - 1, true);
+  });
+
+  document.getElementById("musicNext").addEventListener("click", () => {
+    loadTrack(currentTrack + 1, true);
+  });
+
+  select.addEventListener("change", () => {
+    loadTrack(Number(select.value), true);
+  });
+
+  audio.addEventListener("play", updatePlayButton);
+  audio.addEventListener("pause", updatePlayButton);
+  audio.addEventListener("ended", () => loadTrack(currentTrack + 1, true));
+
+  audio.addEventListener("loadedmetadata", () => {
+    duration.textContent = formatTime(audio.duration);
+    seek.max = Number.isFinite(audio.duration) ? audio.duration : 0;
+  });
+
+  audio.addEventListener("timeupdate", () => {
+    if (!seeking) seek.value = audio.currentTime || 0;
+    currentTime.textContent = formatTime(audio.currentTime);
+  });
+
+  seek.addEventListener("input", () => {
+    seeking = true;
+    currentTime.textContent = formatTime(Number(seek.value));
+  });
+
+  seek.addEventListener("change", () => {
+    audio.currentTime = Number(seek.value);
+    seeking = false;
+  });
+
+  volume.addEventListener("input", () => {
+    audio.volume = Number(volume.value);
+    volumeText.textContent = Math.round(audio.volume * 100) + "%";
+  });
+
+  audio.volume = Number(volume.value);
+  loadTrack(0, false);
+})();
+</script>
 
 </body>
 </html>
