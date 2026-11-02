@@ -689,15 +689,22 @@ body:has(.hero) .hero {
   object-fit: cover;
 }
 
+
+/* 多托雷：放大並往左移 */
 .portrait-raven {
-  top: -105px;
-  right: -65px;
+  top: -120px;
+  right: 5px;
+  width: 220px;
+  height: 285px;
   transform: rotate(-3deg);
 }
 
+/* 米露西亞：放大並往左移 */
 .portrait-hare {
-  top: -105px;
-  right: -65px;
+  top: -120px;
+  right: 5px;
+  width: 220px;
+  height: 285px;
   transform: rotate(3deg);
 }
 
