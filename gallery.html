@@ -508,7 +508,8 @@ function render() {
 
   const filtered = works.filter(work => {
     const matchesCategory =
-      activeFilter === "全部" || work.category === activeFilter;
+  activeFilter === "全部" ||
+  (work.category || "").trim() === activeFilter.trim();
 
     const text = [
       work.title, work.category, work.date,
